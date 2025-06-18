@@ -87,6 +87,7 @@ cd LLM_Recommendation_Amazon
 
 # 3. Install dependencies
 pip install -r requirements.txt
+```
 
 ---
 
