@@ -10,21 +10,33 @@ import torch
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from huggingface_hub import hf_hub_download
+import gdown
+import os
 
-# ------------------------------------------
-# ✅ Load Assets from Hugging Face
-# ------------------------------------------
+def download_from_gdrive(file_id, dest):
+    if not os.path.exists(dest):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, dest, quiet=False)
 
-# HF Repo ID
-REPO_ID = "sweetyseelam/llm-recommendation-assets"
+# -- Use ONLY file IDs below (not full URLs) --
+REVIEW_EMBEDDINGS_ID = "1y1IIWbihrPox6Lv3vHj0u9LdumpoiOhM"
+XTEST_EMBEDDINGS_ID = "1eCvwH4eLogPt6H57bfJ8L_AMCcWjGTjO"
+REVIEWS_CSV_ID     = "17JO8WAefDoJeGZh9dN19k0V33qSac6e6"
+MODEL_PKL_ID       = "1KoWzyLyHV3Dd4bMvPDWcpjgUCMq9Wk94"
+Y_TEST_ID = "1UAze0cRUyVXxBKhVcwINtDzK5vPhyMFv"
 
-# Download large files dynamically
-review_embeddings = np.load(hf_hub_download(REPO_ID, filename="review_embeddings.npy"))
-X_test = np.load(hf_hub_download(REPO_ID, filename="X_test_embeddings.npy"))
-df = pd.read_csv(hf_hub_download(REPO_ID, filename="amazon_reviews_with_embeddings_v1.csv"))
-model = joblib.load(hf_hub_download(REPO_ID, filename="model_xgb_regressor.pkl"))
-y_test = pd.read_csv("y_test.csv").iloc[:, 0]  # Load from local file
+download_from_gdrive(REVIEW_EMBEDDINGS_ID, "review_embeddings.npy")
+download_from_gdrive(XTEST_EMBEDDINGS_ID, "X_test_embeddings.npy")
+download_from_gdrive(REVIEWS_CSV_ID, "amazon_reviews_with_embeddings_v1.csv")
+download_from_gdrive(MODEL_PKL_ID, "model_xgb_regressor.pkl")
+download_from_gdrive(Y_TEST_ID, "y_test.csv")
+
+# Now load as before
+review_embeddings = np.load("review_embeddings.npy")
+X_test = np.load("X_test_embeddings.npy")
+df = pd.read_csv("amazon_reviews_with_embeddings_v1.csv")
+model = joblib.load("model_xgb_regressor.pkl")
+y_test = pd.read_csv("y_test.csv").iloc[:, 0]   # Load from local file
 
 # Embedder & Phi-2
 embedder = SentenceTransformer("all-MiniLM-L6-v2")

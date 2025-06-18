@@ -10,4 +10,5 @@ model_xgb_regressor.pkl
 phi2_model/
 review_embeddings.npy
 llm-product-recommender/
+y_test.csv
         
