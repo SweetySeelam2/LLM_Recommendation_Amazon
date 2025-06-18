@@ -5,6 +5,8 @@
 
 # LLM-Based Product Recommendation System
 
+## Personalized, Explainable Product Recommendations for Real-World E-Commerce
+
 
 ## 🧠 Overview
 
@@ -13,7 +15,8 @@ In a marketplace flooded with generic five-star reviews, shoppers struggle to fi
 - 🔍 **Semantic Retrieval** via 384-dimensional review embeddings (SentenceTransformer)
 - 🧮 **Rating Prediction** using XGBoost Regressor (MAE = 0.72, R² = 0.44)
 - 📊 **Explainability** through SHAP summary plots
-- 🤖 **Human-Style Recommendations** using the lightweight Phi-2 LLM
+- 🤖 **Human-Style Recommendations** using the lightweight Phi-2 LLM                                                                                        
+-    **Interactive Web App** Test, upload data, and view live insights on Streamlit
 
 The system is fast (≤ 2 seconds/query), CPU-compatible, and optimized for scalable enterprise use in domains like e-commerce, streaming, or fintech.
 
@@ -30,18 +33,17 @@ The system is fast (≤ 2 seconds/query), CPU-compatible, and optimized for scal
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation (Local)
 
 ```bash
 # 1. Clone the repo
-git clone https://huggingface.co/spaces/sweetyseelam/llm-product-recommender
+git clone https://github.com/SweetySeelam2/LLM_Recommendation_Amazon.git
 
-# 2. Navigate to folder
-cd llm-product-recommender
+# 2. Navigate to the folder
+cd LLM_Recommendation_Amazon
 
 # 3. Install dependencies
 pip install -r requirements.txt
-```
 
 ---
 
@@ -49,13 +51,15 @@ pip install -r requirements.txt
 
 You can run the app locally via:
 
-```bash
 streamlit run app.py
-```
 
-Or try the **live deployed version** here:
+---
 
-[![🟢 Click to Open App](https://img.shields.io/badge/Open-HuggingFace%20App-brightgreen?logo=streamlit)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
+## 🚀 Live Demo
+
+You can try the deployed app instantly here:
+
+[![🟢 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendationsystem-amazon.streamlit.app/)
 
 ---
 
@@ -84,11 +88,10 @@ Or try the **live deployed version** here:
 
 ## 🌐 Deployment
 
-This app is deployed on **Hugging Face Spaces** using `streamlit` and `huggingface_hub` for dynamic model/data loading.
+🌐 Deployment
+This app is currently deployed on Streamlit Cloud.
 
-**Repo ID**: [`sweetyseelam/llm-recommendation-assets`](https://huggingface.co/sweetyseelam/llm-recommendation-assets)
-
-All large files (model, embeddings, dataset) are stored and dynamically loaded using `hf_hub_download`.
+All large model/data files are loaded from Google Drive for this deployment (see app.py for details).
 
 ---
 
