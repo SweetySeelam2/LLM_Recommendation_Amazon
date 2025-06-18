@@ -1,12 +1,13 @@
 
-[![🚀 Live on Hugging Face Spaces](https://img.shields.io/badge/🚀-Live_on_Hugging_Face_Spaces-blue?logo=huggingface&style=for-the-badge)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
+[![🚀 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendationsystem-amazon.streamlit.app/)
 
 ---
 
 # LLM-Based Product Recommendation System
 
-## Personalized, Explainable Product Recommendations for Real-World E-Commerce
+Personalized, Explainable Product Recommendations for Real-World E-Commerce
 
+---
 
 ## 🧠 Overview
 
@@ -30,6 +31,48 @@ The system is fast (≤ 2 seconds/query), CPU-compatible, and optimized for scal
 - ⚡ **Real-Time Performance**: Inference under 2 seconds on CPU
 - 📦 **Streamlit Interface**: Clean UX for testing queries or uploading custom datasets
 - 🔐 **MIT Licensed**: Free to use, modify, and build upon
+
+---
+
+## 📦 Dataset                                                                                    
+
+- **Source:** Amazon Electronics Reviews Dataset on Kaggle
+
+- **Sample Size:** 1,000,000+ reviews
+
+- **Features Used:**
+
+    - reviewText: Full customer review text
+
+    - summary: Review headline
+
+    - overall: Star rating (1–5)
+
+    - productTitle, brand, price
+
+    - reviewerID (for personalization)
+
+---
+
+## 🏗️ How It Works
+
+**1. Retrieve:**
+
+- User query or sample product is embedded via all-MiniLM-L6-v2 (384-dim vector)
+
+- Finds nearest products using cosine similarity in embedding space
+
+**2. Rank:**
+
+- For each candidate product, XGBoost Regressor predicts rating based on text embeddings + metadata
+
+- SHAP plots show which features most influence the prediction
+
+**3. Explain:**
+
+- Phi-2 LLM generates concise, human-style summaries for top products
+
+- Full breakdown and SHAP plots shown per product for transparency
 
 ---
 
