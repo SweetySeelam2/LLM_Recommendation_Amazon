@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+shap
+matplotlib
+xgboost
+joblib
+torch
+sentence-transformers
+transformers
+huggingface-hub
+scikit-learn
