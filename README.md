@@ -11,7 +11,7 @@
 In a marketplace flooded with generic five-star reviews, shoppers struggle to find truly standout products. This project presents a full **Retrieve → Rank → Explain** pipeline that delivers personalized, interpretable recommendations using:
 
 - 🔍 **Semantic Retrieval** via 384-dimensional review embeddings (SentenceTransformer)
-- 🧮 **Rating Prediction** using XGBoost Regressor (MAE = 0.73, R² = 0.44)
+- 🧮 **Rating Prediction** using XGBoost Regressor (MAE = 0.72, R² = 0.44)
 - 📊 **Explainability** through SHAP summary plots
 - 🤖 **Human-Style Recommendations** using the lightweight Phi-2 LLM
 
@@ -63,7 +63,7 @@ Or try the **live deployed version** here:
 
 | **Metric**                  | **Value**      | **Business Target**     |
 |----------------------------|----------------|--------------------------|
-| MAE (Mean Abs. Error)      | 0.73 stars     | ≤ 1.0 star               |
+| MAE (Mean Abs. Error)      | 0.72 stars     | ≤ 1.0 star               |
 | RMSE                       | 0.99 stars     | ≤ 1.2 stars              |
 | R² Score                   | 0.44           | ≥ 0.40                   |
 | Classification Accuracy*   | 48.4%          | ≥ 40% (pseudo-categorical) |
