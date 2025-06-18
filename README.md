@@ -1,22 +1,7 @@
 
----
-title: LLM Product Recommender
-emoji: 🤖
-colorFrom: indigo
-colorTo: pink
-sdk: streamlit
-sdk_version: "1.32.2"
-app_file: app.py
-pinned: false
----
-
 # LLM-Based Product Recommendation System
 
 [![🚀 Live on Hugging Face Spaces](https://img.shields.io/badge/🚀-Live_on_Hugging_Face_Spaces-blue?logo=huggingface&style=for-the-badge)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
-
----
-
-[![View on GitHub](https://img.shields.io/badge/GitHub-View%20Repo-black?logo=github&style=for-the-badge)](https://github.com/SweetySeelam2/LLM_Recommendation_Amazon)
 
 ---
 
