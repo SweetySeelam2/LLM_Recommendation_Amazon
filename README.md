@@ -1,21 +1,9 @@
 
-# LLM-Based Product Recommendation System
-
 [![🚀 Live on Hugging Face Spaces](https://img.shields.io/badge/🚀-Live_on_Hugging_Face_Spaces-blue?logo=huggingface&style=for-the-badge)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
 
 ---
 
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Model Performance](#model-performance)
-6. [Business Impact](#business-impact)
-7. [Deployment](#deployment)
-8. [Profile & Links](#profile--links)
-9. [License](#license)
+# LLM-Based Product Recommendation System
 
 ---
 
