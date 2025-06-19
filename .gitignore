@@ -11,4 +11,15 @@ phi2_model/
 review_embeddings.npy
 llm-product-recommender/
 y_test.csv
-        
+make_demo_files.py
+model_pickle_fix.py
+model_test.py
+test.py
+X_test_embeddings_50k.npy
+review_embeddings_50k.npy
+y_test_50k.csv
+amazon_reviews_with_embeddings_50k.csv
+X_test_embeddings_25k.npy
+review_embeddings_25k.npy
+y_test_25k.csv
+amazon_reviews_with_embeddings_25k.csv

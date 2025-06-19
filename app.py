@@ -5,66 +5,50 @@ import pandas as pd
 import numpy as np
 import shap
 import matplotlib.pyplot as plt
-import joblib
-import torch
+from xgboost import XGBRegressor
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModelForCausalLM
-import gdown
-import os
 
-def download_from_gdrive(file_id, dest):
-    if not os.path.exists(dest):
-        url = f"https://drive.google.com/uc?id={file_id}"
-        gdown.download(url, dest, quiet=False)
+# ------------------------------------------
+# ✅ Load Assets from Local Repo
+# ------------------------------------------
 
-# -- Use ONLY file IDs below (not full URLs) --
-REVIEW_EMBEDDINGS_ID = "1y1IIWbihrPox6Lv3vHj0u9LdumpoiOhM"
-XTEST_EMBEDDINGS_ID = "1eCvwH4eLogPt6H57bfJ8L_AMCcWjGTjO"
-REVIEWS_CSV_ID     = "17JO8WAefDoJeGZh9dN19k0V33qSac6e6"
-MODEL_PKL_ID       = "1KoWzyLyHV3Dd4bMvPDWcpjgUCMq9Wk94"
-Y_TEST_ID = "1UAze0cRUyVXxBKhVcwINtDzK5vPhyMFv"
-
-download_from_gdrive(REVIEW_EMBEDDINGS_ID, "review_embeddings.npy")
-download_from_gdrive(XTEST_EMBEDDINGS_ID, "X_test_embeddings.npy")
-download_from_gdrive(REVIEWS_CSV_ID, "amazon_reviews_with_embeddings_v1.csv")
-download_from_gdrive(MODEL_PKL_ID, "model_xgb_regressor.pkl")
-download_from_gdrive(Y_TEST_ID, "y_test.csv")
-
-# Now load as before
-review_embeddings = np.load("review_embeddings.npy")
-X_test = np.load("X_test_embeddings.npy")
-df = pd.read_csv("amazon_reviews_with_embeddings_v1.csv")
-model = joblib.load("model_xgb_regressor.pkl")
-y_test = pd.read_csv("y_test.csv").iloc[:, 0]   # Load from local file
+review_embeddings = np.load("review_embeddings_10k.npy")
+X_test = np.load("X_test_embeddings_10k.npy")
+df = pd.read_csv("amazon_reviews_with_embeddings_10k.csv")
+model = XGBRegressor()
+model.load_model("model_xgb_regressor.json")
+y_test = pd.read_csv("y_test_10k.csv").iloc[:, 0]
 
 # Embedder & Phi-2
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
-phi2_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2")
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-phi2_model.to(device).eval()
+phi2_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2").to('cpu').eval()
 
 # ------------------------------------------
-# 🔍 Utility Functions
+# 🧠 Session State Utility (ALWAYS fallback to default df)
+# ------------------------------------------
+def get_current_df():
+    return st.session_state["df"] if "df" in st.session_state else df
+
+# ------------------------------------------
+# 🔍 Utility Functions (always use current_df)
 # ------------------------------------------
 
 def retrieve_top_reviews(query_text, top_n=5):
+    current_df = get_current_df()
     q_vec = embedder.encode([query_text])
     sims = cosine_similarity(q_vec, review_embeddings)[0]
     idxs = sims.argsort()[::-1]
-    filtered_idxs = [i for i in idxs if df.iloc[i]['verified_purchase'] == 1][:top_n]
-    top_reviews = df.iloc[filtered_idxs]['reviewText'].tolist()
-    product_asins = df.iloc[filtered_idxs]['asin'].tolist()
+    filtered_idxs = [i for i in idxs if current_df.iloc[i]['verified_purchase'] == 1][:top_n]
+    top_reviews = current_df.iloc[filtered_idxs]['reviewText'].tolist()
+    product_asins = current_df.iloc[filtered_idxs]['asin'].tolist()
     product_name = f"Product ASIN: {product_asins[0]}" if product_asins else "a relevant product"
     return top_reviews, product_name
 
-
 def generate_phi2_recommendation(query_text, top_reviews, product_name):
-    # Build the review context
     context = "\n\n".join(f"Review {i+1}: {r}" for i, r in enumerate(top_reviews))
-
-    # Sharpened prompt with explicit bullet points
     prompt = (
         f"Customer Query: \"{query_text}\"\n\n"
         f"Here are some verified customer reviews:\n{context}\n\n"
@@ -75,8 +59,7 @@ def generate_phi2_recommendation(query_text, top_reviews, product_name):
         "  3. Overall user satisfaction\n\n"
         "Recommendation:\n"
     )
-
-    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    inputs = tokenizer(prompt, return_tensors="pt").to('cpu')
     outputs = phi2_model.generate(
         **inputs,
         max_new_tokens=150,
@@ -86,25 +69,16 @@ def generate_phi2_recommendation(query_text, top_reviews, product_name):
         pad_token_id=tokenizer.eos_token_id,
         eos_token_id=tokenizer.eos_token_id
     )
-
-    # Decode full output
     decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-    # Extract the part after "Recommendation:"
     if "Recommendation:" in decoded:
         rec_block = decoded.split("Recommendation:")[-1]
     else:
         rec_block = decoded[len(prompt):]
-
-    # Clean and return the first meaningful line
     for line in rec_block.splitlines():
         clean = line.strip()
         if clean and not clean.startswith("#"):
             return clean
-
-    # Fallback
     return "⚠️ Unable to generate a clear recommendation."
-
 
 def explain_model_with_shap():
     explainer = shap.Explainer(model)
@@ -139,6 +113,7 @@ if page == "📘 Overview":
 
     **Built With:** XGBoost • SHAP • Hugging Face Phi-2 • SentenceTransformers • Streamlit
     """)
+    st.info("🚀 Note: For speed, this live demo runs on a 10,000-review sample. All model training and business insights use 1,000,000 reviews. See full details on [GitHub](https://github.com/sweetyseelam/llm_recommendation_amazon).") 
 
 elif page == "📥 Test or Upload Data":
     st.title("📥 Test the Model with Our Sample or Upload Your Own Data")
@@ -154,10 +129,17 @@ elif page == "📥 Test or Upload Data":
         user_df = pd.read_csv(uploaded)
         st.session_state["df"] = user_df
         st.success("✅ Uploaded and ready!")
-    else:
-        if st.button("Use Sample Dataset"):
-            st.session_state["df"] = df.copy()
-            st.success("✅ Sample dataset loaded!")
+        st.dataframe(user_df.head(20))
+    elif st.button("Use Sample Dataset"):
+        st.session_state["df"] = df.copy()
+        st.success("✅ Sample dataset loaded!")
+        st.dataframe(df.head(20))
+
+    # Always show a preview if available (sample or uploaded)
+    current_df = get_current_df()
+    if current_df is not None:
+        st.dataframe(current_df.head(20))
+    st.info("🚀 Note: For speed, this live demo runs on a 10,000-review sample. All model training and business insights use 1,000,000 reviews. See full details on [GitHub](https://github.com/sweetyseelam/llm_recommendation_amazon).")
 
 elif page == "📈 Explain Model (SHAP)":
     st.title("📈 Model Explainability with SHAP")
@@ -165,8 +147,12 @@ elif page == "📈 Explain Model (SHAP)":
     This view explains **why** the model predicts certain ratings. The SHAP summary plot shows which features most influence predictions.
     """)
     if st.button("Generate SHAP Summary Plot"):
-        explain_model_with_shap()
-
+        try:
+            explain_model_with_shap()
+        except Exception as e:
+            st.error(f"Failed to generate SHAP summary: {e}")
+    st.info("🚀 Note: For speed, this live demo runs on a 10,000-review sample. All model training and business insights use 1,000,000 reviews. See full details on [GitHub](https://github.com/sweetyseelam/llm_recommendation_amazon).")
+    
 elif page == "🤖 LLM Recommendation":
     st.title("🤖 AI-Powered Product Recommendation")
     st.markdown("""
@@ -175,17 +161,21 @@ elif page == "🤖 LLM Recommendation":
 
     query = st.text_input("Type your product query here:", "Looking for a long-lasting Bluetooth headset with noise cancellation")
     if st.button("Submit Query"):
-        reviews, product_name = retrieve_top_reviews(query)
-        recommendation = generate_phi2_recommendation(query, reviews, product_name)
+        try:
+            reviews, product_name = retrieve_top_reviews(query)
+            recommendation = generate_phi2_recommendation(query, reviews, product_name)
 
-        st.markdown(f"### 🛍️ Recommended Product: **{product_name}**")
-        st.markdown(f"### ✅ Why You'll Love It: {recommendation}")
+            st.markdown(f"### 🛍️ Recommended Product: **{product_name}**")
+            st.markdown(f"### ✅ Why You'll Love It: {recommendation}")
 
-        st.markdown("#### 🔍 Top 3 Reviews Considered")
-        for i, r in enumerate(reviews[:3]):
-            st.markdown(f"- **Review {i+1}:** {r}")
+            st.markdown("#### 🔍 Top 3 Reviews Considered")
+            for i, r in enumerate(reviews[:3]):
+                st.markdown(f"- **Review {i+1}:** {r}")
 
-        st.info("💡 Note: This recommendation is AI-generated based on verified reviews. It is not an official endorsement.")
+            st.info("💡 Note: This recommendation is AI-generated based on verified reviews. It is not an official endorsement. "
+                    "🚀 Note: For speed, this live demo runs on a 10,000-review sample. All model training and business insights use 1,000,000 reviews. See full details on [GitHub](https://github.com/sweetyseelam/llm_recommendation_amazon).")
+        except Exception as e:
+            st.error(f"Failed to generate recommendation: {e}")
 
 # ------------------------------------------
 # 📜 MIT License Footer

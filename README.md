@@ -9,6 +9,10 @@ Personalized, Explainable Product Recommendations for Real-World E-Commerce
 
 ---
 
+**“Note:** “For cloud deployment and speed, this live demo runs on a 10,000-review sample. All model training and metrics are based on 1 million reviews. For full-scale results and business insights, see our [GitHub/Juypter Notebook]".
+
+---
+
 ## 🧠 Overview
 
 In a marketplace flooded with generic five-star reviews, shoppers struggle to find truly standout products. This project presents a full **Retrieve → Rank → Explain** pipeline that delivers personalized, interpretable recommendations using:
