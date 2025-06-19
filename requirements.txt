@@ -1,5 +1,4 @@
 streamlit
-gdown
 pandas
 numpy
 shap
@@ -9,5 +8,4 @@ joblib
 torch
 sentence-transformers
 transformers
-huggingface-hub
 scikit-learn

@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # ------------------------------------------
-# ✅ Load Assets from Local Repo
+# ✅ Load Assets from Local Repo (10k only)
 # ------------------------------------------
 
 review_embeddings = np.load("review_embeddings_10k.npy")
@@ -21,8 +21,8 @@ model = XGBRegressor()
 model.load_model("model_xgb_regressor.json")
 y_test = pd.read_csv("y_test_10k.csv").iloc[:, 0]
 
-# Embedder & Phi-2
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
+# Embedder & Phi-2 LLM (CPU only, required for Streamlit Cloud)
+embedder = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
 tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
 phi2_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2").to('cpu').eval()
 

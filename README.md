@@ -1,5 +1,5 @@
 
-[![🚀 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendationsystem-amazon.streamlit.app/)
+[![🚀 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendation-system-amazon.streamlit.app/)
 
 ---
 
@@ -107,7 +107,7 @@ streamlit run app.py
 
 You can try the deployed app instantly here:
 
-[![🟢 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendationsystem-amazon.streamlit.app/)
+[![🟢 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendation-system-amazon.streamlit.app/)
 
 ---
 
