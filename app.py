@@ -22,14 +22,23 @@ model = XGBRegressor()
 model.load_model("model_xgb_regressor.json")
 y_test = pd.read_csv("y_test_10k.csv").iloc[:, 0]
 
-# Embedder & Phi-2 LLM (CPU only, required for Streamlit Cloud)
-# 👇 Patch the torch module to safely bypass the .to() error
-torch.nn.Module.to_empty = lambda self, device=None: self  # monkey patch
+# Embedder & Phi-2 LLM (CPU only, required for Streamlit Cloud) 
 
-# 👇 Load model (let it pick device itself)
-embedder = SentenceTransformer("all-MiniLM-L6-v2", trust_remote_code=True)
-tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
-phi2_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2", trust_remote_code=True).eval()
+# --- Load Embedder (Auto handles device)
+@st.cache_resource(show_spinner="🔄 Loading Embedder...")
+def load_embedder():
+    return SentenceTransformer("all-MiniLM-L6-v2")  # ✅ No `.to()` used
+
+embedder = load_embedder()
+
+# --- Load Phi-2 Model (SAFE for Streamlit Cloud)
+phi2_model = AutoModelForCausalLM.from_pretrained(
+    "microsoft/phi-2", torch_dtype=torch.float32  # ✅ Avoids meta tensor issue
+)
+phi2_model.eval()  # ✅ Safe call
+
+# --- Load Tokenizer
+tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
 
 # ------------------------------------------
 # 🧠 Session State Utility (ALWAYS fallback to default df)
