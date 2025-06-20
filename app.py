@@ -9,6 +9,7 @@ from xgboost import XGBRegressor
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
 # ------------------------------------------
 # ✅ Load Assets from Local Repo (10k only)
@@ -22,9 +23,13 @@ model.load_model("model_xgb_regressor.json")
 y_test = pd.read_csv("y_test_10k.csv").iloc[:, 0]
 
 # Embedder & Phi-2 LLM (CPU only, required for Streamlit Cloud)
-embedder = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
-tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
-phi2_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2").to('cpu').eval()
+# 👇 Patch the torch module to safely bypass the .to() error
+torch.nn.Module.to_empty = lambda self, device=None: self  # monkey patch
+
+# 👇 Load model (let it pick device itself)
+embedder = SentenceTransformer("all-MiniLM-L6-v2", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
+phi2_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2", trust_remote_code=True).eval()
 
 # ------------------------------------------
 # 🧠 Session State Utility (ALWAYS fallback to default df)
