@@ -152,8 +152,7 @@ All large model/data files are loaded from Google Drive for this deployment (see
 
 ---
 
-## 📜 License
+## 🔒 Proprietary & All Rights Reserved
+© 2025 Sweety Seelam. This work is proprietary and protected by copyright. All content, models, code, and visuals are © 2025 Sweety Seelam. No part of this project, app, code, or analysis may be copied, reproduced, distributed, or used for any purpose—commercial or otherwise—without explicit written permission from the author.
 
-This project is licensed under the **MIT License** — meaning it is **free to use, modify, and redistribute** with proper attribution.
-
-© 2025 Sweety Seelam
+For licensing, commercial use, or collaboration inquiries, please contact: LinkedIn | Email: sweetyseelam2@gmail.com
