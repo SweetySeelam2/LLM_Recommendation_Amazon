@@ -15,12 +15,12 @@ import torch
 # ✅ Load Assets from Local Repo (10k only)
 # ------------------------------------------
 
-review_embeddings = np.load("review_embeddings_5k.npy")
-X_test = np.load("X_test_embeddings_5k.npy")
-df = pd.read_csv("amazon_reviews_with_embeddings_5k.csv")
+review_embeddings = np.load("review_embeddings_1k.npy")
+X_test = np.load("X_test_embeddings_1k.npy")
+df = pd.read_csv("amazon_reviews_with_embeddings_1k.csv")
 model = XGBRegressor()
 model.load_model("model_xgb_regressor.json")
-y_test = pd.read_csv("y_test_5k.csv").iloc[:, 0]
+y_test = pd.read_csv("y_test_1k.csv").iloc[:, 0]
 
 # Embedder & Phi-2 LLM (CPU only, required for Streamlit Cloud) 
 
