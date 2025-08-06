@@ -1,5 +1,5 @@
 
-[![🚀 Open on Streamlit Cloud](https://img.shields.io/badge/Open-Streamlit%20App-brightgreen?logo=streamlit)](https://llm-recommendation-system-amazon.streamlit.app/)
+[![🚀 Open on Hugging Face](https://img.shields.io/badge/Open-HuggingFace%20App-brightgreen?logo=huggingface)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
 
 ---
 
