@@ -3,10 +3,6 @@
 
 ---
 
-[![View on GitHub](https://img.shields.io/badge/GitHub-View%20Repo-black?logo=github&style=for-the-badge)](https://github.com/SweetySeelam2/LLM_Recommendation_Amazon)
-
----
-
 # LLM-Based Product Recommendation System
 
 ---
