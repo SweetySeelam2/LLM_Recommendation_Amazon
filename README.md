@@ -1,4 +1,3 @@
-
 [![🚀 Live on Hugging Face Spaces](https://img.shields.io/badge/🚀-Live_on_Hugging_Face_Spaces-blue?logo=huggingface&style=for-the-badge)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
 
 ---
@@ -26,7 +25,7 @@ The system is fast (≤ 2 seconds/query), CPU-compatible, and optimized for scal
 
 
 **Note:**  
-The deployed demo version uses a **random, unbiased sample of 1,000 reviews** (from the 1M+ dataset) to ensure fast, memory-safe, and seamless user experience on Hugging Face Spaces.  
+The deployed demo version uses a **random, unbiased sample of 1,000 reviews** (from the original 1M+ dataset) to ensure fast, memory-safe, and seamless user experience on Hugging Face Spaces.  
 All results, recommendations, and explainability remain **representative, reliable, and fully aligned** with the full-scale model.
 
 ---
@@ -84,46 +83,6 @@ This project addresses those limitations using LLMs and review understanding.
     - productTitle, brand, price
 
     - reviewerID (for personalization)
-
----
-
-## ✨ Features
-
-- 🧠 **Phi-2 LLM Summarization**: Generates fluent product summaries from top-K reviews
-- 🧾 **SHAP Explainability**: Transparent model decisions with visual insights
-- 🔄 **Semantic Similarity Matching**: Retrieves most relevant verified reviews
-- ⚡ **Real-Time Performance**: Inference under 2 seconds on CPU
-- 📦 **Streamlit Interface**: Clean UX for testing queries or uploading custom datasets
-- 🔐 **MIT Licensed**: Free to use, modify, and build upon
-
----
-
-## ⚙️ Installation
-
-```bash
-# 1. Clone the repo
-git clone https://huggingface.co/spaces/sweetyseelam/llm-product-recommender
-
-# 2. Navigate to folder
-cd llm-product-recommender
-
-# 3. Install dependencies
-pip install -r requirements.txt
-```
-
----
-
-## 🚀 Usage
-
-You can run the app locally via:
-
-```bash
-streamlit run app.py
-```
-
-Or try the **live deployed version** here:
-
-[![🟢 Click to Open App](https://img.shields.io/badge/Open-HuggingFace%20App-brightgreen?logo=streamlit)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)
 
 ---
 
@@ -227,6 +186,9 @@ All large files (model, embeddings, dataset) are stored and dynamically loaded u
 
 > **Demo File Note:**  
 > The app loads only the 1,000-row files (`*_1k.csv`) to ensure smooth, fast performance on Hugging Face Spaces, with no compromise in accuracy or quality.
+
+**Hugging Face App:** [![🟢 Click to Open App](https://img.shields.io/badge/Open-HuggingFace%20App-brightgreen?logo=streamlit)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)                      
+**Github Project Repository:** [![GitHub Repo](https://img.shields.io/badge/GitHub-View%20Repo-black?logo=github&style=for-the-badge)](https://github.com/SweetySeelam2/LLM_Recommendation_Amazon)
 
 ---
 
