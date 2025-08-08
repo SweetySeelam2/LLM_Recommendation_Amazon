@@ -10,7 +10,7 @@
 
 Millions of customers leave reviews on Amazon’s platform every day. However, extracting meaningful product preferences and using that information for personalized, high-impact recommendations remains a complex challenge, especially in categories like Electronics, where reviews are dense, technical, and multilingual.
 
-This project builds a large-scale, production-ready, LLM-enhanced recommendation system that understands and leverages natural language feedback from over 1 million Amazon Electronics reviews to generate contextual, personalized suggestions. 
+This project builds a large-scale, production-ready, LLM-enhanced recommendation system that understands and leverages natural language feedback from 1 Million+ Amazon Electronics reviews to generate contextual, personalized suggestions. 
 
 It integrates modern NLP techniques, embeddings, and transformer-based LLMs to decode user preferences in natural language and surface relevant products.
 
@@ -25,7 +25,7 @@ The system is fast (≤ 2 seconds/query), CPU-compatible, and optimized for scal
 
 
 **Note:**  
-The deployed demo version uses a **random, unbiased sample of 1,000 reviews** (from the original 1M+ dataset) to ensure fast, memory-safe, and seamless user experience on Hugging Face Spaces.  
+The deployed demo version uses a **random, unbiased sample of 1,000 reviews** (from the original 1 Million+ dataset) to ensure fast, memory-safe, and seamless user experience on Hugging Face Spaces.  
 All results, recommendations, and explainability remain **representative, reliable, and fully aligned** with the full-scale model.
 
 ---
@@ -52,7 +52,7 @@ This project addresses those limitations using LLMs and review understanding.
 
 - The system aims to go beyond traditional recommendation techniques by understanding nuanced product feedback expressed in natural language reviews and generating personalized product suggestions.
 
-- One key goal is to extract product and preference insights from over 1 million user reviews and leverage them to train transformer-based language models capable of providing contextual recommendations.
+- One key goal is to extract product and preference insights from over 1 Million+ user reviews and leverage them to train transformer-based language models capable of providing contextual recommendations.
 
 - The project will generate sentence-level embeddings from review texts using state-of-the-art models like all-MiniLM-L6-v2 and feed them into a retrieval-augmented generation (RAG) or prompt-based LLM pipeline.
 
@@ -68,7 +68,7 @@ This project addresses those limitations using LLMs and review understanding.
 
 - Source: Amazon Electronics Reviews Dataset on Kaggle (Amazon Reviews-2023)[https://amazon-reviews-2023.github.io/]
 
-- Dataset Size: 1,000,000+ reviews
+- Dataset Size: 1 Million+ reviews
 
 - Sample Size: 1,000+ reviews for Hugging Face App Deployment
 
@@ -98,7 +98,7 @@ This project addresses those limitations using LLMs and review understanding.
 
 > ⚙️ *Pseudo-Classification Accuracy refers to converting predicted rating into closest star bin (1–5 stars) and measuring accuracy.
 
-> ⚙️ *All reported metrics were measured on the full test set (170,578 reviews). The deployed app uses a 10k random subset for demo purposes, with consistent unbiased results.*
+> ⚙️ *All reported metrics were measured on the full test set (1 Million+ reviews). The deployed app uses a 1k random subset for demo purposes, with consistent unbiased results.*
 
 ---
 
@@ -118,7 +118,7 @@ This project addresses those limitations using LLMs and review understanding.
 
 **Scalability & Efficiency:** 
 
-Trained on ≈ 1M+ Amazon reviews with 384-dimensional sentence embeddings, all on standard laptop hardware.
+Trained on ≈ 1 Million+ Amazon reviews with 384-dimensional sentence embeddings, all on standard laptop hardware.
 End-to-end embedding, ranking, and explainability (SHAP + LLM) runs in under 2 seconds per query, proving that production-grade pipelines need not require expensive GPU clusters.
 
 ---
@@ -187,7 +187,7 @@ All large files (model, embeddings, dataset) are stored and dynamically loaded u
 > **Demo File Note:**  
 > The app loads only the 1,000-row files (`*_1k.csv`) to ensure smooth, fast performance on Hugging Face Spaces, with no compromise in accuracy or quality.
 
-**Hugging Face App:** [![🟢 Click to Open App](https://img.shields.io/badge/Open-HuggingFace%20App-brightgreen?logo=streamlit)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)                      
+**Hugging Face App:** [![🟢 Click to Open App](https://img.shields.io/badge/Open-HuggingFace%20App-brightgreen?logo=streamlit)](https://huggingface.co/spaces/sweetyseelam/llm-product-recommender)              
 **Github Project Repository:** [![GitHub Repo](https://img.shields.io/badge/GitHub-View%20Repo-black?logo=github&style=for-the-badge)](https://github.com/SweetySeelam2/LLM_Recommendation_Amazon)
 
 ---
