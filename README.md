@@ -106,7 +106,7 @@ This project addresses those limitations using LLMs and review understanding.
 
 **Model Performance (KPIs):**
 
-- MAE (Mean Absolute Error): 0.72 stars (on a 1–5 scale), demonstrating that our predictions deviate by less than one star on average—well within acceptable tolerance for user-facing recommendations.
+- MAE (Mean Absolute Error): 0.72 stars (on a 1–5 scale), demonstrating that our predictions deviate by less than one star on average, well within acceptable tolerance for user-facing recommendations.
 
 - RMSE (Root Mean Squared Error): 0.99 stars, confirming that large deviations are rare and the model remains accurate even on harder examples.
 
